@@ -1,0 +1,62 @@
+class ReactForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.validate = this.validate.bind(this);
+
+    this.state = {
+      formControls:{
+        name: '',
+        email:''
+        
+       
+      }
+    };
+  }
+
+  handleChange(event) {
+    event.preventDefault();
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+       ...this.state,
+         formControls:{
+            ...this.state.formControls,
+         [name]: value,
+             
+      },
+    });
+  }
+
+  validate(event) {
+    event.preventDefault();
+    console.log(this.state.formControls);
+  }
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.validate}>
+          <div>
+            <input
+              type="text"
+              name="name"
+              value={this.state.formControls.name}
+              onChange={this.handleChange}
+            />
+            <input
+              type="email"
+              name="email"
+              value={this.state.formControls.email}
+              onChange={this.handleChange}
+            />
+            <input type="submit" hidden />
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
+
+
+ReactDOM.render(<ReactForm />, document.getElementById('root'));

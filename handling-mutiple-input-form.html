@@ -1,0 +1,82 @@
+class ReactForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.validate = this.validate.bind(this);
+
+    this.state = {
+      formControls:{
+        name: {
+          value:'',
+          placeholder:'name'
+        },
+        email: {
+        value:'',
+        placeholder:'email'
+      },
+        isGoing: {
+          value: true,
+        }
+        
+       
+      }
+    };
+  }
+
+  handleChange(event) {
+    event.preventDefault();
+    const name = event.target.name;
+    const value = event.target.name === 'isGoing' ? event.target.checked : event.target.value;
+    this.setState({
+       ...this.state,
+         formControls:{
+            ...this.state.formControls,
+         [name]: {
+           ...this.state.formControls[name],
+           value:value
+         }
+             
+      },
+    });
+  }
+
+  validate(event) {
+    event.preventDefault();
+    console.log(this.state.formControls);
+  }
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.validate}>
+          <div>
+            <input
+              type="text"
+              name="name"
+              placeholder={this.state.formControls.name.placeholder}
+              value={this.state.formControls.name.value}
+              onChange={this.handleChange}
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder={this.state.formControls.email.placeholder}
+              value={this.state.formControls.email.value}
+              onChange={this.handleChange}
+            />
+             <input
+              type="checkbox"
+              name="isGoing"
+              checked={this.state.formControls.isGoing.value}
+              onChange={this.handleChange}
+            />
+            <input type="submit" hidden />
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
+
+
+ReactDOM.render(<ReactForm />, document.getElementById('root'));
